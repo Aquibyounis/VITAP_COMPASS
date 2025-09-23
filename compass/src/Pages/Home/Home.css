@@ -45,7 +45,7 @@
   resize: none;
   box-shadow: 0 0 20px -5px rgba(15, 232, 131, 0.594);
   border-radius: 20px;
-  font-size: clamp(14px, 2vw, 20px);
+  font-size: clamp(10px, 1.5vw, 15px);
 }
 
 .textarea::placeholder {

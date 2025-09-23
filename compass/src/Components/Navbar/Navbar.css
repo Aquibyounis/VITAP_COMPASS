@@ -1,16 +1,18 @@
-.nav{
-    width: 100svw;
-    position: fixed;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    top: 1%;
-    left: 50%;
-    transform: translateX(-50%);
+.nav {
+  width: 100svw;
+  position: fixed;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  top: 1%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Lucida Sans', sans-serif;
 }
 
 .ol {
+  position: relative;
   width: 50%;
   max-width: 300px;
   height: 5svh;
@@ -19,48 +21,149 @@
   justify-content: space-around;
   align-items: center;
   border-radius: 25px;
-  font-size: clamp(14px, 2vw, 20px); /* responsive font size */
-  font-family: 'Lucida Sans', sans-serif;
+  font-size: clamp(14px, 2vw, 20px);
   list-style: none;
+  border: 2px solid rgba(255,255,255);
+  color: aliceblue;
+  box-shadow: inset 0 0 25px -5px rgba(0, 119, 255,0.6);
+  background: rgba(0,0,0,0.6);
+  overflow: hidden;
+}
+
+/* Liquid background blob */
+.ol::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 50%; /* matches link width */
+  border-radius: 25px;
+  background: linear-gradient(135deg, rgba(0, 174, 255, 0.9), rgba(0, 119, 255, 0.7));
+  z-index: 0;
+  transform: translateX(0); /* default position */
+  transition: transform 0.5s ease-in-out;
+}
+
+/* Move background when AI is active */
+.ol.ai-active::before {
+  transform: translateX(100%);
+}
+
+.n,
+.active {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1; /* keep above liquid bg */
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.n {
+  color: aliceblue;
+  text-decoration: none;
+  font-size: 1.2em;
+}
+
+.active {
+  color: rgb(255, 255, 255); /* glowing futuristic color */
+  font-size: 1.2em;
+  text-decoration: none;
+  font-weight: bold;
+  text-shadow: 0 0 10px #0ff, 0 0 20px #09f;
+}
+
+/* Logo styles */
+.logo {
+  font-size: 2em;
+  padding: 0.25em 1em;
+  color: aliceblue;
+  text-decoration: none;
+  font-weight: 800;
+  border-radius: 20px;
+  background: linear-gradient(45deg, #fff, #11aedc);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  letter-spacing: 1px;
+}
+
+/* Get Started button */
+.logo2 {
+  font-size: 1.2em;
+  padding: 0.5em 1.2em;
   border: 2px solid white;
   color: aliceblue;
-  box-shadow: inset 0 0 25px -5px rgb(0, 119, 255);
-  background: rgba(0,0,0,0.6);
-
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(0, 119, 255, 0.6), inset 0 0 20px rgba(0, 119, 255, 0.5);
+  transition: all 0.3s ease;
 }
 
-.n{
-    color: aliceblue;
-    text-decoration: none;
-    font-size: 1.2em;
+.logo2:hover {
+  background: rgba(0, 119, 255, 0.2);
+  color: #0ff;
+  box-shadow: 0 0 25px #0ff, inset 0 0 20px rgba(0, 174, 255, 0.6);
 }
-.active{
-    padding: 1em;
-    color: rgb(8, 125, 220);
-    font-size: 1.2em;
-    text-decoration: none;
+
+/* ====================== */
+/* RESPONSIVE STYLES */
+/* ====================== */
+@media (max-width: 768px) {
+  .nav {
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.6em;
+  }
+
+  .logo {
+    font-size: 1em;
+    padding: 0.2em 0.5em;
+  }
+
+  .ol {
+    width: 50%;
+    max-width: none;
+    height: auto;
+    padding: 0.5em;
+    font-size: clamp(12px, 3vw, 18px);
+  }
+
+  .n, .active {
+    font-size: 1em;
+    padding: 0.4em;
+  }
+
+  .logo2 {
+    font-size: 1em;
+    padding: 0.4em 0.9em;
+  }
 }
-.logo{
-    font-size: 2em;
-    padding: 0.25em 1em;
-    border: 2px solid white;
-    color: aliceblue;
-    text-decoration: none;
-    font-weight: 800;
-    box-shadow: inset 0 0 25px -5px rgb(0, 119, 255);
-    background: rgba(0,0,0,0.6);
-    border-radius: 20px;
-    background: linear-gradient(45deg,rgb(225, 0, 255),rgb(17, 218, 17));
-    -webkit-text-fill-color: transparent;
-    -webkit-background-clip: text;
-}
-.logo2{
-    font-size: 1.2em;
-    padding: 0.5em 1em;
-    border: 2px solid white;
-    color: aliceblue;
-    text-decoration: none;
-    box-shadow: inset 0 0 25px -5px rgb(0, 119, 255);
-    background: rgba(0,0,0,0.6);
-    border-radius: 20px;
+
+@media (max-width: 480px) {
+  .nav {
+    gap: 0.4em;
+  }
+
+  .logo {
+    font-size: 1.3em;
+  }
+
+  .ol {
+    width: 90%;
+    padding: 0.4em;
+    font-size: 0.9em;
+  }
+
+  .n, .active {
+    font-size: 0.85em;
+    padding: 0.3em;
+  }
+
+  .logo2 {
+    font-size: 0.85em;
+    padding: 0.3em 0.7em;
+  }
 }

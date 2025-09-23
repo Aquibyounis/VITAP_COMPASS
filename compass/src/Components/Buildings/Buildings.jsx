@@ -47,6 +47,7 @@ const Buildings = () => {
       <div className="card card5">
         <div className="card-content">
           <h3>Card 5</h3>
+          <h2>VIT AP</h2>
         </div>
         <div className="card-hover">
           <button className="ask-btn">Ask AI</button>

@@ -8,6 +8,9 @@ const Compass = () => {
     <div className='compass'>
         <Mainbar/>
         <Buildings/>
+        <div className="btnn">
+          <button className='btn2'>Visit AI <i class="fa-solid fa-up-right-from-square"></i></button>
+        </div>
     </div>
   )
 }

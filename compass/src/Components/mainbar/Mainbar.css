@@ -1,13 +1,24 @@
 .mainbar {
-  height: 90vh;
+  height: 100vh;
   width: 100svw;
   display: flex;
   align-items: end;
   justify-content: center;
+  animation: fadein 2s ;
 }
 
+@keyframes fadein {
+  from{
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to{
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
 .inner_main {
-  height: 80%;
+  height: 70%;
   width: 75%;
   display: flex;
   align-items: center;
@@ -61,3 +72,4 @@
 .ask-btn:hover {
   background: #0e769f;
 }
+

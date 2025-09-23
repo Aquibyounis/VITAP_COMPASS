@@ -1,0 +1,76 @@
+
+.main {
+  width: 100svw;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  /* Layered backgrounds: dots on top of gradient */
+  background-image: 
+    radial-gradient(circle, rgba(43, 58, 74, 0.998) 1px, transparent 1px),
+    radial-gradient(circle at center, #162954, #202527);
+  background-size: 20px 20px, cover;
+  background-repeat: repeat, no-repeat;
+}
+
+
+.h1 {
+  font-size: clamp(1.5rem, 4vw, 3rem); /* responsive heading */
+  font-family: 'Gill Sans', Calibri, sans-serif;
+  color: aliceblue;
+  text-shadow: 0 0 10px black;
+  animation: fadein 2s;
+  padding-bottom: 50px;
+}
+
+.chat {
+  width: 80%;
+  max-width: 700px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.textarea {
+  flex: 1;
+  min-height: 13vh;
+  padding: 1em;
+  background: rgba(3, 6, 18, 0.564);
+  color: aliceblue;
+  outline: none;
+  border: 2px solid white;
+  resize: none;
+  box-shadow: 0 0 20px -5px rgba(15, 232, 131, 0.594);
+  border-radius: 20px;
+  font-size: clamp(14px, 2vw, 20px);
+}
+
+.textarea::placeholder {
+  color: aliceblue;
+}
+
+.btn {
+  margin-left: -3em; /* overlaps slightly inside */
+  height: 2.5em;
+  width: 2.5em;
+  border-radius: 50%;
+  border: 2px solid white;
+  font-size: 1.2em;
+  background: black;
+  color: aliceblue;
+  flex-shrink: 0;
+  margin-top: 10%;
+}
+
+@keyframes fadein {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

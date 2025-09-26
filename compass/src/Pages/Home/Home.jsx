@@ -36,15 +36,24 @@ const Home = () => {
     setBotTyping(true);
 
     try {
+      const sessionId = localStorage.getItem("sessionId") || null;
+
       const response = await fetch("http://127.0.0.1:8000/ask", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "X-Session-ID": sessionId,
+          "X-Clear-Chat": "true"   // <-- new flag
+        },
         body: JSON.stringify({ question: msg }),
       });
 
+
       const data = await response.json();
 
-      // Push bot answer
+      // Save session ID if new
+      if (!sessionId) localStorage.setItem("sessionId", data.session_id);
+
       setMessages((prev) => [...prev, { sender: "bot", text: data.answer }]);
     } catch (err) {
       setMessages((prev) => [
@@ -55,7 +64,6 @@ const Home = () => {
       setBotTyping(false);
     }
   };
-
   // Handle Enter key
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -63,6 +71,30 @@ const Home = () => {
       sendMessage(query);
     }
   };
+  // Clear chat function
+  const clearChat = async () => {
+    // Clear local storage
+    localStorage.removeItem("chatMessages");
+    localStorage.removeItem("sessionId");
+
+    setMessages([]);
+    setChatStarted(false);
+
+    // Notify server to clear memory
+    const sessionId = localStorage.getItem("sessionId") || null;
+    if (sessionId) {
+      await fetch("http://127.0.0.1:8000/ask", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Session-ID": sessionId,
+          "X-Clear-Chat": "true"
+        },
+        body: JSON.stringify({ question: "" }) // empty question just to trigger clear
+      });
+    }
+  };
+
 
   return (
     <div className="main">
@@ -114,10 +146,7 @@ const Home = () => {
 
       <button className="clear-btn">
         <span className="clear-text"
-          onClick={() => {
-            setMessages([]);
-            setChatStarted(false);
-          }}>clear</span>
+          onClick={clearChat}>clear</span>
         C
       </button>
 

@@ -1,14 +1,11 @@
-
 .main {
   width: 100svw;
-  height: 100svh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-
-  /* Layered backgrounds: dots on top of gradient */
   background-image: 
     radial-gradient(circle, rgba(43, 58, 74, 0.998) 1px, transparent 1px),
     radial-gradient(circle at center, #162954, #202527);
@@ -16,14 +13,23 @@
   background-repeat: repeat, no-repeat;
 }
 
+.inner_main2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  height: 80%;
+  width: 100%;
+}
 
 .h1 {
-  font-size: clamp(1.5rem, 4vw, 2.5rem); /* responsive heading */
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
   font-family: 'Gill Sans', Calibri, sans-serif;
   color: aliceblue;
   text-shadow: 0 0 10px black;
   animation: fadein 2s;
-  padding-bottom: 50px;
+  padding-bottom: 10px;
 }
 
 .chat {
@@ -32,6 +38,7 @@
   display: flex;
   align-items: center;
   position: relative;
+  bottom: -10%;
 }
 
 .textarea {
@@ -40,8 +47,8 @@
   padding: 1em;
   background: rgba(3, 6, 18, 0.564);
   color: aliceblue;
-  outline: none;
   border: 2px solid white;
+  outline: none;
   resize: none;
   box-shadow: 0 0 20px -5px rgba(15, 232, 131, 0.594);
   border-radius: 20px;
@@ -52,22 +59,15 @@
   color: aliceblue;
 }
 
-.btn {
+.btns {
+  display: flex;
+  gap: 0.5em;
+  margin-left: -6em; /* overlaps slightly inside textarea */
   position: relative;
-  left: 3%;
-  margin-left: -3em; /* overlaps slightly inside */
-  height: 2em;
-  width: 2em;
-  border-radius: 50%;
-  border: 2px solid white;
-  font-size: 1.2em;
-  background: black;
-  color: aliceblue;
-  flex-shrink: 0;
-  margin-top: 10%;
+  top: 30%;
 }
-.btn3 {
-  margin-left: -3em; /* overlaps slightly inside */
+
+.btn {
   height: 2em;
   width: 2em;
   border-radius: 50%;
@@ -75,9 +75,18 @@
   font-size: 1.2em;
   background: black;
   color: aliceblue;
+  cursor: pointer;
   flex-shrink: 0;
-  position: relative;
-  top: 15%;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  transform: scale(1.1);
+  background: #111;
+}
+
+.mic-btn {
+  margin-bottom: 0.3em;
 }
 
 @keyframes fadein {
@@ -87,5 +96,87 @@
   }
   to {
     opacity: 1;
+  }
+}
+
+/* Questions grid */
+.questions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* exactly 2 per row */
+  gap: 1rem;  
+  width: 50%;
+  max-width: 1000px;
+  margin: 0 auto; 
+  padding: 1rem;
+}
+
+.questions p {
+  min-height: 100px;
+  color: aliceblue;
+  border: 2px solid rgb(0, 119, 255);
+  padding: 0.8rem;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(45deg, transparent, rgb(64, 79, 88));
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  text-align: center;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-family:monospace;
+}
+
+.questions p:hover {
+  transform: translateY(-5px);
+}
+
+/* Responsive: stack into 1 per row on smaller screens */
+@media (max-width: 768px) {
+  .questions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .chat {
+    flex-direction: column;
+    bottom: 0;
+    width: 50%;
+  }
+
+  .btns {
+    margin-left: 0;
+    top: 10px;
+    justify-content: center;
+  }
+  .textarea{
+    width: 70svw;
+  }
+}
+
+@media (max-width: 600px) {
+  .h1{
+    width: 70svw;
+  }
+  .questions {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .questions p{
+    min-height: 50px;
+    font-size: 0.7em;
+  }
+  .chat {
+    flex-direction: column;
+    bottom: 0;
+    width: 50%;
+  }
+
+  .btns {
+    margin-left: 0;
+    top: 10px;
+    justify-content: center;
+  }
+  .textarea{
+    width: 70svw;
   }
 }

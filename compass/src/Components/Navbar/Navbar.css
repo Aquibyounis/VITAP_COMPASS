@@ -6,11 +6,11 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  top: 1%;
+  top: 0.5%;
   left: 50%;
   transform: translateX(-51%);
   font-family: 'Lucida Sans', sans-serif;
-  background: rgba(0, 0, 0, 0.546);
+  background: rgba(0, 0, 0, 0.144);
   border-radius: 30px;
   backdrop-filter: blur(100px);
 }

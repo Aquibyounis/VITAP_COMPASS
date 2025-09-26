@@ -1,5 +1,6 @@
 .nav {
-  width: 100svw;
+  width: 80svw;
+  height: 10%;
   position: fixed;
   z-index: 100;
   display: flex;
@@ -7,8 +8,11 @@
   justify-content: space-around;
   top: 1%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-51%);
   font-family: 'Lucida Sans', sans-serif;
+  background: rgba(0, 0, 0, 0.546);
+  border-radius: 30px;
+  backdrop-filter: blur(100px);
 }
 
 .ol {
@@ -116,6 +120,8 @@
     flex-direction: column;
     justify-content: center;
     gap: 0.6em;
+    width: 70%;
+    padding: 0.5em;
   }
 
   .logo {
@@ -126,8 +132,8 @@
   .ol {
     width: 50%;
     max-width: none;
-    height: auto;
-    padding: 0.5em;
+    height: 50%;
+    padding: 1em;
     font-size: clamp(12px, 3vw, 18px);
   }
 
@@ -144,6 +150,7 @@
 
 @media (max-width: 480px) {
   .nav {
+    flex-direction: row;
     gap: 0.4em;
   }
 
@@ -153,6 +160,7 @@
 
   .ol {
     width: 90%;
+    height: 50%;
     padding: 0.4em;
     font-size: 0.9em;
   }

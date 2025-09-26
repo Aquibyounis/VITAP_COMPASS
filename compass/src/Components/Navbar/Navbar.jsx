@@ -13,7 +13,6 @@ const Navbar = () => {
         <Link className={sec==="AI" ? 'active' : 'n'} onClick={() => setSec("AI")} to='/'>AI</Link>
       </ul>
 
-      <button className='logo2'>Get Started</button>
     </div>
   )
 }

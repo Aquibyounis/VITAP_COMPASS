@@ -21,15 +21,22 @@
   height: 70%;
   width: 75%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #1e5089;
+  align-items: end;
+  justify-content: end;
   border-radius: 35px;
   border: 2px solid white;
   background-image: url("../../Assets/main.webp");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+}
+.inner_main h1{
+  font-size: 3em;
+  background: linear-gradient(45deg,rgb(1, 232, 249),rgb(255, 0, 208));
+  border-radius: 20px;
+  padding: 10px;
+  margin-right: 30px;
+  border: 2px solid white;
 }
 
 
@@ -59,7 +66,7 @@
 }
 
 .ask-btn {
-  background: #0e769f;
+  background: #031e29;
   border: none;
   padding: 0.6rem 1.2rem;
   border-radius: 8px;
@@ -67,9 +74,30 @@
   cursor: pointer;
   margin-bottom: 0.5rem;
   transition: background 0.3s;
+  cursor: pointer;
 }
 
 .ask-btn:hover {
   background: #0e769f;
 }
 
+
+@media (max-width:600px) {
+  .inner_main{
+    height: 30svh;
+  }
+}
+@media (max-width:480px) {
+  .mainbar{
+    height: 60svh;
+  }
+  .inner_main{
+    height: 30svh;
+    width: 85svw;
+  }
+  .inner_main h1{
+    font-size: 1em;
+    margin-right: 10px;
+    font-weight: 600;
+  }
+}

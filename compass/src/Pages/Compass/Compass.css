@@ -67,3 +67,12 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+@media (max-width:480px) {
+  .btn2{
+    height: 70px;
+    width: 130px;
+  }
+}

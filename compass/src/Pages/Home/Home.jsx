@@ -29,6 +29,7 @@ const Home = () => {
           </p>
         </div>
 
+      </div>
         {/* Chatbox */}
         <div className="chat">
           <textarea
@@ -46,7 +47,6 @@ const Home = () => {
             </button>
           </div>
         </div>
-      </div>
     </div>
   );
 };

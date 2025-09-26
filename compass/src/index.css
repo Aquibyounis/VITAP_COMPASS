@@ -6,8 +6,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding: 0;
-  overflow-x: hidden;
-  
+  background-image: 
+    radial-gradient(circle, rgba(43, 58, 74, 0.998) 1px, transparent 1px),
+    radial-gradient(circle at center, #162954, #202527);
+  background-size: 20px 20px, cover;
+  background-repeat: repeat, no-repeat;
 }
 
 code {

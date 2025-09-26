@@ -6,9 +6,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-image: 
-    radial-gradient(circle, rgba(43, 58, 74, 0.998) 1px, transparent 1px),
-    radial-gradient(circle at center, #162954, #202527);
+  
   background-size: 20px 20px, cover;
   background-repeat: repeat, no-repeat;
 }
@@ -18,9 +16,10 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
   height: 80%;
   width: 100%;
+  margin-bottom: 100px;
 }
 
 .h1 {
@@ -37,21 +36,28 @@
   max-width: 700px;
   display: flex;
   align-items: center;
-  position: relative;
-  bottom: -10%;
-}
-
-.textarea {
-  flex: 1;
-  min-height: 13vh;
-  padding: 1em;
+  justify-content: center;
+  position: absolute;
+  bottom: 1%;
+  border: 1px solid white;
   background: rgba(3, 6, 18, 0.564);
   color: aliceblue;
-  border: 2px solid white;
   outline: none;
   resize: none;
   box-shadow: 0 0 20px -5px rgba(15, 232, 131, 0.594);
   border-radius: 20px;
+  padding: 5px;
+}
+
+.textarea {
+  min-height: 13vh;
+  width: 95%;
+  padding: 1em;
+  background: transparent;
+  color: aliceblue;
+  outline: none;
+  border: none;
+  resize: none;
   font-size: clamp(10px, 1.5vw, 15px);
 }
 
@@ -61,17 +67,18 @@
 
 .btns {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   gap: 0.5em;
-  margin-left: -6em; /* overlaps slightly inside textarea */
-  position: relative;
-  top: 30%;
+
 }
 
 .btn {
   height: 2em;
   width: 2em;
   border-radius: 50%;
-  border: 2px solid white;
+  border: 1px solid white;
   font-size: 1.2em;
   background: black;
   color: aliceblue;
@@ -155,26 +162,39 @@
 }
 
 @media (max-width: 600px) {
+  .main{
+    min-height: 100svh;
+    justify-content: center;
+  }
   .h1{
     width: 70svw;
+    padding-bottom: 0px;
+  }
+  .inner_main2{
+    gap: 2px;
   }
   .questions {
-    grid-template-columns: repeat(1, 1fr);
+    display: grid;
+    flex-direction: column;
+    gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+    width: 60%;
   }
   .questions p{
     min-height: 50px;
-    font-size: 0.7em;
+    font-size: 0.75em;
+    padding: 0.4em;
   }
   .chat {
-    flex-direction: column;
-    bottom: 0;
-    width: 50%;
+    flex-direction: row;
+    width: 80%;
+    gap: 5px;
+    bottom: 10px;
   }
 
   .btns {
     margin-left: 0;
-    top: 10px;
-    justify-content: center;
+    flex-direction: column;
   }
   .textarea{
     width: 70svw;

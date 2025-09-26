@@ -83,6 +83,9 @@
 
 
 @media (max-width:600px) {
+  .mainbar{
+    height: 50svh;
+  }
   .inner_main{
     height: 30svh;
   }

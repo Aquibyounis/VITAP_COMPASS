@@ -50,7 +50,7 @@
 }
 
 .textarea {
-  min-height: 13vh;
+  min-height: 10vh;
   width: 95%;
   padding: 1em;
   background: transparent;
@@ -236,7 +236,7 @@
 /* User message */
 .message.user {
   align-self: flex-end;
-  background: linear-gradient(135deg, #3a86ff, #00c3ff);
+  background: linear-gradient(135deg, #3a86ff, #195968);
   color: white;
   border-bottom-right-radius: 0;
 }
@@ -244,10 +244,16 @@
 /* Bot message */
 .message.bot {
   align-self: flex-start;
-  background: rgba(255, 255, 255, 0.1);
-  color: aliceblue;
-  border-bottom-left-radius: 0;
+  background: linear-gradient(145deg, #1a1a40, #12122b);
+  color: #e4e4f5;
+  border-radius: 15px;
+  padding: 1.2em;
+  line-height: 1.6;
+  white-space: pre-line;
+  text-align: left;
+  font-family: "Inter", sans-serif;
 }
+
 
 /* Typing animation for bot */
 .bot_typing {

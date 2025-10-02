@@ -124,9 +124,14 @@ const Home = () => {
         <div className="inner_main2">
           <div className="chat_messages">
             {messages.map((msg, idx) => (
-              <div key={idx} className={`message ${msg.sender}`}>
+              <div 
+                key={idx} 
+                className={`message ${msg.sender}`} 
+                style={{ whiteSpace: "pre-line", textAlign: "left" }}
+              >
                 {msg.text}
               </div>
+
             ))}
 
             {/* Typing animation */}
@@ -161,9 +166,6 @@ const Home = () => {
           onKeyDown={handleKeyDown}
         />
         <div className="btns">
-          <button className="btn mic-btn">
-            <i className="fa-solid fa-microphone-lines"></i>
-          </button>
           <button className="btn send-btn" onClick={() => sendMessage(query)}>
             <i className="fa-solid fa-arrow-up"></i>
           </button>

@@ -43,11 +43,10 @@ const Home = () => {
         headers: {
           "Content-Type": "application/json",
           "X-Session-ID": sessionId,
-          "X-Clear-Chat": "true"   // <-- new flag
+          "X-Clear-Chat": "false", // Always false for normal queries
         },
         body: JSON.stringify({ question: msg }),
       });
-
 
       const data = await response.json();
 
@@ -64,6 +63,7 @@ const Home = () => {
       setBotTyping(false);
     }
   };
+
   // Handle Enter key
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -72,15 +72,9 @@ const Home = () => {
     }
   };
   // Clear chat function
-  const clearChat = async () => {
+  const clearChatHandler = async () => {
     // Clear local storage
     localStorage.removeItem("chatMessages");
-    localStorage.removeItem("sessionId");
-
-    setMessages([]);
-    setChatStarted(false);
-
-    // Notify server to clear memory
     const sessionId = localStorage.getItem("sessionId") || null;
     if (sessionId) {
       await fetch("http://127.0.0.1:8000/ask", {
@@ -88,12 +82,16 @@ const Home = () => {
         headers: {
           "Content-Type": "application/json",
           "X-Session-ID": sessionId,
-          "X-Clear-Chat": "true"
+          "X-Clear-Chat": "true",
         },
-        body: JSON.stringify({ question: "" }) // empty question just to trigger clear
+        body: JSON.stringify({ question: "" }),
       });
     }
+    localStorage.removeItem("sessionId");
+    setMessages([]);
+    setChatStarted(false);
   };
+
 
 
   return (
@@ -151,7 +149,7 @@ const Home = () => {
 
       <button className="clear-btn">
         <span className="clear-text"
-          onClick={clearChat}>clear</span>
+          onClick={clearChatHandler}>clear</span>
         C
       </button>
 

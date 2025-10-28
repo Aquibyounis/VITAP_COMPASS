@@ -3,12 +3,11 @@ import "./Home.css";
 
 const Home = () => {
   useEffect(() => {
-    alert("This is a temporary chat! Once you go to new chat you cant return...");
+    alert("This is a temporary chat! Once you go to new chat you can’t return...");
   }, []);
 
   const [query, setQuery] = useState("");
   const [messages, setMessages] = useState(() => {
-    // Load messages from localStorage
     const saved = localStorage.getItem("chatMessages");
     return saved ? JSON.parse(saved) : [];
   });
@@ -16,17 +15,40 @@ const Home = () => {
   const [botTyping, setBotTyping] = useState(false);
   const chatEndRef = useRef(null);
 
-  // Auto-scroll to latest message
+  // Auto-scroll
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, botTyping]);
 
-  // Save messages to localStorage
+  // Save messages
   useEffect(() => {
     localStorage.setItem("chatMessages", JSON.stringify(messages));
   }, [messages]);
 
-  // Send message handler
+  // Typing effect (fixed undefined bug)
+  const simulateTyping = async (fullText, delay = 25) => {
+    return new Promise((resolve) => {
+      let index = 0;
+      const interval = setInterval(() => {
+        if (index < fullText.length) {
+          const char = fullText[index];
+          if (char !== undefined) {
+            setMessages((prev) => {
+              const last = prev[prev.length - 1];
+              const others = prev.slice(0, -1);
+              return [...others, { ...last, text: last.text + char }];
+            });
+          }
+          index++;
+        } else {
+          clearInterval(interval);
+          resolve();
+        }
+      }, delay);
+    });
+  };
+
+  // Send message
   const sendMessage = async (msg) => {
     if (!msg.trim()) return;
 
@@ -37,45 +59,54 @@ const Home = () => {
 
     try {
       const sessionId = localStorage.getItem("sessionId") || null;
-
       const response = await fetch("http://127.0.0.1:8000/ask", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "X-Session-ID": sessionId,
-          "X-Clear-Chat": "false", // Always false for normal queries
+          "X-Clear-Chat": "false",
         },
         body: JSON.stringify({ question: msg }),
       });
 
       const data = await response.json();
+      if (!sessionId && data.session_id)
+        localStorage.setItem("sessionId", data.session_id);
 
-      // Save session ID if new
-      if (!sessionId) localStorage.setItem("sessionId", data.session_id);
+      // Add bot placeholder
+      setMessages((prev) => [...prev, { sender: "bot", text: "" }]);
 
-      setMessages((prev) => [...prev, { sender: "bot", text: data.answer }]);
+      // Clean text fully before typing
+      const cleanAnswer = (data.answer || "")
+        .replace(/\bundefined\b/gi, "")
+        .replace(/\bnull\b/gi, "")
+        .replace(/\bNone\b/gi, "")
+        .trim();
+
+      await simulateTyping(cleanAnswer, 20);
     } catch (err) {
       setMessages((prev) => [
         ...prev,
-        { sender: "bot", text: "Error connecting to server." },
+        { sender: "bot", text: "⚠️ Error connecting to server." },
       ]);
     } finally {
       setBotTyping(false);
     }
   };
 
-  // Handle Enter key
+  // Handle Enter
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendMessage(query);
     }
   };
-  // Clear chat function
+
+  // Clear chat
   const clearChatHandler = async () => {
-    // Clear local storage
     localStorage.removeItem("chatMessages");
     const sessionId = localStorage.getItem("sessionId") || null;
+
     if (sessionId) {
       await fetch("http://127.0.0.1:8000/ask", {
         method: "POST",
@@ -92,11 +123,9 @@ const Home = () => {
     setChatStarted(false);
   };
 
-
-
   return (
     <div className="main">
-      {/* Questions grid */}
+      {/* Pre-chat Section */}
       {!chatStarted && (
         <div className="inner_main2">
           <h1 className="h1">Hey VITIAN! How can I help you?</h1>
@@ -117,22 +146,21 @@ const Home = () => {
         </div>
       )}
 
-      {/* Chat messages */}
+      {/* Chat window */}
       {chatStarted && (
         <div className="inner_main2">
           <div className="chat_messages">
             {messages.map((msg, idx) => (
-              <div 
-                key={idx} 
-                className={`message ${msg.sender}`} 
+              <div
+                key={idx}
+                className={`message ${msg.sender}`}
                 style={{ whiteSpace: "pre-line", textAlign: "left" }}
               >
                 {msg.text}
               </div>
-
             ))}
 
-            {/* Typing animation */}
+            {/* Typing dots */}
             {botTyping && (
               <div className="message bot">
                 <div className="bot_typing">
@@ -142,17 +170,19 @@ const Home = () => {
                 </div>
               </div>
             )}
+
             <div ref={chatEndRef} />
           </div>
         </div>
       )}
 
+      {/* Clear button */}
       <button className="clear-btn">
-        <span className="clear-text"
-          onClick={clearChatHandler}>clear</span>
+        <span className="clear-text" onClick={clearChatHandler}>
+          clear
+        </span>
         C
       </button>
-
 
       {/* Chat input */}
       <div className="chat">

@@ -12,6 +12,7 @@
   font-family: 'Lucida Sans', sans-serif;
   border-radius: 30px;
   backdrop-filter: blur(100px);
+  background:linear-gradient(45deg,rgba(3, 58, 129, 0.641),rgb(44, 53, 64));
 }
 
 .ol {

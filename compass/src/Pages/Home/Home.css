@@ -12,14 +12,11 @@
 }
 
 .inner_main2 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
   gap: 10px;
   height: 80%;
-  width: 100%;
+  width: 45%;
   margin-bottom: 100px;
+  margin-top: 3%;
 }
 
 .h1 {
@@ -71,7 +68,6 @@
   justify-content: center;
   flex-direction: column;
   gap: 0.5em;
-
 }
 
 .btn {
@@ -88,7 +84,7 @@
 }
 
 .btn:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
   background: #111;
 }
 
@@ -191,10 +187,9 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-height: 60vh;
+  max-height: 68svh;
   overflow-y: auto;
   padding: 1rem;
-  width: 45%;
   margin: 0 auto;
 }
 .chat_messages::-webkit-scrollbar {

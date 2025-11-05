@@ -58,7 +58,7 @@ const Home = () => {
     setBotTyping(true);
 
     try {
-      const sessionId = localStorage.getItem("sessionId") || null;
+      let sessionId = localStorage.getItem("sessionId") || null;
       const response = await fetch("http://127.0.0.1:8000/ask", {
         method: "POST",
         headers: {
@@ -70,8 +70,11 @@ const Home = () => {
       });
 
       const data = await response.json();
-      if (!sessionId && data.session_id)
-        localStorage.setItem("sessionId", data.session_id);
+      if (!sessionId && data.session_id) {
+        sessionId = data.session_id; // ✅ update local variable first
+        localStorage.setItem("sessionId", sessionId);
+      }
+
 
       // Add bot placeholder
       setMessages((prev) => [...prev, { sender: "bot", text: "" }]);

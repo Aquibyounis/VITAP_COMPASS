@@ -14,41 +14,42 @@ const Home = () => {
   const [chatStarted, setChatStarted] = useState(messages.length > 0);
   const [botTyping, setBotTyping] = useState(false);
   const chatEndRef = useRef(null);
+  const chatContainerRef = useRef(null);
 
-  // Auto-scroll
+  // -------------------------
+  // AUTO-SCROLL TO BOTTOM
+  // -------------------------
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    requestAnimationFrame(() => {
+      chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    });
   }, [messages, botTyping]);
 
-  // Save messages
+  // Save messages to localStorage
   useEffect(() => {
     localStorage.setItem("chatMessages", JSON.stringify(messages));
   }, [messages]);
 
-  // Typing effect (fixed undefined bug)
-  const simulateTyping = async (fullText, delay = 25) => {
-    return new Promise((resolve) => {
-      let index = 0;
-      const interval = setInterval(() => {
-        if (index < fullText.length) {
-          const char = fullText[index];
-          if (char !== undefined) {
-            setMessages((prev) => {
-              const last = prev[prev.length - 1];
-              const others = prev.slice(0, -1);
-              return [...others, { ...last, text: last.text + char }];
-            });
-          }
-          index++;
-        } else {
-          clearInterval(interval);
-          resolve();
-        }
-      }, delay);
-    });
+  // -------------------------
+  // CHUNKED TYPING EFFECT
+  // -------------------------
+  const simulateTypingChunked = async (fullText, chunkSize = 5, delay = 25) => {
+    let index = 0;
+    while (index < fullText.length) {
+      const chunk = fullText.slice(index, index + chunkSize);
+      setMessages((prev) => {
+        const last = prev[prev.length - 1];
+        const others = prev.slice(0, -1);
+        return [...others, { ...last, text: last.text + chunk }];
+      });
+      index += chunkSize;
+      await new Promise((r) => setTimeout(r, delay));
+    }
   };
 
-  // Send message
+  // -------------------------
+  // SEND MESSAGE
+  // -------------------------
   const sendMessage = async (msg) => {
     if (!msg.trim()) return;
 
@@ -71,22 +72,22 @@ const Home = () => {
 
       const data = await response.json();
       if (!sessionId && data.session_id) {
-        sessionId = data.session_id; // ✅ update local variable first
+        sessionId = data.session_id;
         localStorage.setItem("sessionId", sessionId);
       }
-
 
       // Add bot placeholder
       setMessages((prev) => [...prev, { sender: "bot", text: "" }]);
 
-      // Clean text fully before typing
+      // Clean response
       const cleanAnswer = (data.answer || "")
         .replace(/\bundefined\b/gi, "")
         .replace(/\bnull\b/gi, "")
         .replace(/\bNone\b/gi, "")
         .trim();
 
-      await simulateTyping(cleanAnswer, 20);
+      // Use chunked typing
+      await simulateTypingChunked(cleanAnswer, 5, 20);
     } catch (err) {
       setMessages((prev) => [
         ...prev,
@@ -152,7 +153,7 @@ const Home = () => {
       {/* Chat window */}
       {chatStarted && (
         <div className="inner_main2">
-          <div className="chat_messages">
+          <div className="chat_messages" ref={chatContainerRef}>
             {messages.map((msg, idx) => (
               <div
                 key={idx}
@@ -166,7 +167,7 @@ const Home = () => {
             {/* Typing dots */}
             {botTyping && (
               <div className="message bot">
-                <div className="bot_typing">
+                <div className="bot_typing" style={{ pointerEvents: "none" }}>
                   <span></span>
                   <span></span>
                   <span></span>

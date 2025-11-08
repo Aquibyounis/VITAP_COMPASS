@@ -16,7 +16,7 @@ const Navbar = () => {
 
   return (
     <div className="nav">
-      <Link className='logo' to='/'>VIT Compass</Link>
+      <Link className='logo' to='/'>Fresher NAV</Link>
       <ul className={`ol ${sec === "AI" ? "ai-active" : ""}`}>
         <Link 
           className={sec === "Campus" ? 'active' : 'n'} 
